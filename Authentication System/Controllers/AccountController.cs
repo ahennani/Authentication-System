@@ -1,4 +1,5 @@
 ﻿using Authentication_System.Extensions;
+using Authentication_System.Managers;
 using Authentication_System.Models;
 using Authentication_System.ModelViews;
 using Authentication_System.Utilities;
@@ -17,21 +18,12 @@ namespace Authentication_System.Controllers
     [Authorize]
     public class AccountController : Controller
     {
-        private readonly AppDbContext _context;
-        private readonly IAuthenticationSchemeProvider authenticationSchemeProvider;
-        private readonly ManageUsers manageUsers;
+        private readonly IAccountManager _accountManager;
 
-        public AccountController(
-                                    AppDbContext context, 
-                                    IAuthenticationSchemeProvider authenticationSchemeProvider, 
-                                    ManageUsers manageUsers
-                                )
+        public AccountController(IAccountManager accountManager)
         {
-            this._context = context;
-            this.authenticationSchemeProvider = authenticationSchemeProvider;
-            this.manageUsers = manageUsers;
+            this._accountManager = accountManager;
         }
-
 
         /////////////////////////////////////////////////////////////////////////////////////////////
         //////////////////////////////////////////< Signup >//////////////////////////////////////////
@@ -40,15 +32,13 @@ namespace Authentication_System.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> Signup(string returnUrl)
         {
-            returnUrl = returnUrl ?? "/";
+            returnUrl = returnUrl ?? Url.Content("~/");
             var model = new AccountSignupViewModel()
             {
                 ExternalLogins = new ExternalLoginsViewModel()
                 {
                     ReturnUrl = returnUrl,
-                    Providers = (await this.authenticationSchemeProvider.GetAllSchemesAsync())
-                                .Where(p => !p.Name.Equals("Cookies"))
-                                .ToList()
+                    Providers = await _accountManager.GetExternalProviders()
                 }
             };
 
@@ -60,49 +50,48 @@ namespace Authentication_System.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Signup(AccountSignupViewModel model, string returnUrl)
         {
-            returnUrl = returnUrl ?? "/";
+            returnUrl = returnUrl ?? Url.Content("~/");
 
             model.ExternalLogins = new ExternalLoginsViewModel()
             {
                 ReturnUrl = returnUrl,
-                Providers = (await this.authenticationSchemeProvider.GetAllSchemesAsync())
-                                .Where(p => !p.Name.Equals("Cookies"))
-                                .ToList()
+                Providers = await _accountManager.GetExternalProviders()
             };
-
 
             if (ModelState.IsValid)
             {
-                var user = this._context.AppUsers
-                                        .Where(u => u.Username == model.Email)
-                                        .Where(u => u.Email == model.Email)
-                                        .FirstOrDefault();
+                var user = _accountManager.GetAppUserByEmail(model.Email);
                 if (user is not null)
                 {
                     ModelState.AddModelError(string.Empty, "Email Is Already Taken !!");
                     return View(model);
                 }
 
-                var isValidPassword = ValidatePassword.IsValidate(model.Password, out List<string> passwordValidationErrors);
-                if (!isValidPassword)
+
+                var validateResult = _accountManager.CheckPasswordValidation(model.Password);
+                if (!validateResult.IsValid)
                 {
-                    foreach (var error in passwordValidationErrors)
+                    foreach (var error in validateResult.Errors)
                     {
                         ModelState.AddModelError(string.Empty, error);
                     }
                     return View(model);
                 }
 
-                user = new AppUser()
+                var result = await _accountManager.CreateAppUserAsync(model);
+                if (!result.Succeed)
                 {
-                    Username = model.Email,
-                    Firstname = model.FirstName,
-                    Lastname = model.LastName,
-                    Email = model.Email,
-                    Password = model.Password
-                };
-                this._context.AppUsers.Add(user);
-                var result = this._context.SaveChanges();
+                    foreach (var error in result.Errors)
+                    {
+                        ModelState.AddModelError(string.Empty, error);
+                    }
+                    return View(model);
+                }
+
+                if (Url.IsLocalUrl(returnUrl))
+                {
+                    return Redirect(returnUrl);
+                }
 
                 return Redirect("/");
             }
@@ -118,18 +107,16 @@ namespace Authentication_System.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> Login(string returnUrl)
         {
+            returnUrl = returnUrl ?? Url.Content("~/");
+
             var model = new AccountLoginViewModel()
             {
                 ExternalLogins = new ExternalLoginsViewModel()
                 {
                     ReturnUrl = returnUrl,
-                    Providers = (await this.authenticationSchemeProvider.GetAllSchemesAsync())
-                                .Where(p => !p.Name.Equals("Cookies"))
-                                .ToList()
+                    Providers = await _accountManager.GetExternalProviders()
                 }
             };
-
-            var count = this._context.AppUsers.Count();
 
             return View(model);
         }
@@ -138,112 +125,100 @@ namespace Authentication_System.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> Login(AccountLoginViewModel model, string returnUrl)
         {
-            if (ModelState.IsValid)
-            {
-                var user = this._context.AppUsers
-                                        .Where(u => u.Username == model.Email)
-                                        .Where(u => u.Password == model.Password)
-                                        .FirstOrDefault();
-                if (user is null)
-                {
-                    ModelState.AddModelError(string.Empty, "The password Or Email Is Not Correct !!");
-                    return View(model);
-                }
-
-                var claims = new List<Claim>();
-                claims.Add(new Claim(ClaimTypes.NameIdentifier, user.UserId.ToString()));
-                claims.Add(new Claim(ClaimTypes.Name, user.Username));
-                claims.Add(new Claim(ClaimTypes.Name, user.Email));
-                claims.Add(new Claim(ClaimTypes.GivenName, user.Firstname));
-                claims.Add(new Claim(ClaimTypes.Surname, user.Lastname));
-
-                var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
-                var claimsPrincipal = new ClaimsPrincipal(claimsIdentity);
-
-                await HttpContext.SignInAsync(claimsPrincipal);
-                return Redirect("/");
-            }
+            returnUrl = returnUrl ?? Url.Content("~/");
 
             model = new AccountLoginViewModel()
             {
                 ExternalLogins = new ExternalLoginsViewModel()
                 {
                     ReturnUrl = returnUrl,
-                    Providers = (await this.authenticationSchemeProvider.GetAllSchemesAsync())
-                                            .Where(p => !p.Name.Equals("Cookies"))
-                                            .ToList()
+                    Providers = await _accountManager.GetExternalProviders()
                 }
             };
+
+            if (ModelState.IsValid)
+            {
+                var result = await _accountManager.PasswordSignInAsync(model);
+                if (result is not null)
+                {
+                    foreach (var error in result.Errors)
+                    {
+                        ModelState.AddModelError(string.Empty, error);
+                    }
+                    return View(model);
+                }
+
+
+                if (Url.IsLocalUrl(returnUrl))
+                {
+                    return Redirect(returnUrl);
+                }
+
+                return Redirect("/");
+            }
 
             return View(model);
         }
 
 
+        //////////////////////////////////////////< ExternalLogin >//////////////////////////////////////////
         [HttpPost]
         [AllowAnonymous]
         public IActionResult ExternalLogin(string provider, string returnUrl)
         {
+            returnUrl = returnUrl ?? Url.Content("~/");
+
             if (User.Identity.IsAuthenticated)
             {
-                return RedirectToAction("", "Home");
+                return RedirectToAction(String.Empty, "Home");
             }
 
-            var redirectUrl = Url.Action("ExternalLoginCallback", "Account", new { ReturnUrl = returnUrl, Provider = provider }); // /Account/ExternalLoginCallback?ReturnUrl=returnUrl
 
-            var authenticationProperties = new AuthenticationProperties() { RedirectUri = redirectUrl };
+            // /Account/ExternalLoginCallback?ReturnUrl=returnUrl
+            var redirectUri = Url.Action("ExternalLoginCallback", "Account", new { ReturnUrl = returnUrl, Provider = provider });
 
-            return new ChallengeResult(provider, authenticationProperties);
+            var properties = _accountManager.ConfigureExternalAuthenticationProperties(provider, redirectUri);
+
+            return new ChallengeResult(provider, properties);
         }
 
 
-        [HttpGet]
+        [AcceptVerbs("GET", "POST")]
         [AllowAnonymous]
         public async Task<IActionResult> ExternalLoginCallback(string provider, string returnUrl = null, string remoteError = null)
         {
             returnUrl = returnUrl ?? Url.Content("~/");
-            var scheme = User.Claims.FirstOrDefault(c => c.Type == ".AuthScheme")?.Value;
 
             var model = new AccountLoginViewModel()
             {
                 ExternalLogins = new ExternalLoginsViewModel()
                 {
                     ReturnUrl = returnUrl,
-                    Providers = (await this.authenticationSchemeProvider.GetAllSchemesAsync())
-                                .Where(p => !p.Name.Equals("Cookies"))
-                                .ToList()
+                    Providers = await _accountManager.GetExternalProviders()
                 }
             };
 
-            if (remoteError != null)
+            if (remoteError is not null)
             {
                 ModelState.AddModelError(string.Empty, $"Error from External Provider: {remoteError}");
                 return View(nameof(SignIn), model);
             }
 
-            List<Claim> claims = null;
-            //var username = (HttpContext.User.Claims.Where(c => c.Type == ClaimTypes.Email).FirstOrDefault()).Value;
-            var username = HttpContext.User.Claims.ToList().GetClaim(ClaimTypes.Email);
-            var user = this.manageUsers.FindAppUser(username);
+            var user = _accountManager.GetExternalAppUser();
 
             if (user is null)
             {
-                claims = HttpContext.User.Claims.ToList();
-                user = this.manageUsers.AddNewUser(provider, claims);
+                var result = await _accountManager.CreateExternalAppUserAsync(provider);
             }
             else
             {
-                if (!(user.Providers.Any(p => p.Name.Equals(provider))))
+                if (!_accountManager.IsProviderExist(user, provider))
                 {
-                    user = this.manageUsers.AddProviderToUser(user, provider);
+                    var isAdded = _accountManager.AddAppUserProvider(user, provider);
                 }
-
-                this.manageUsers.GetUserClaims(username, out claims);
+                await _accountManager.SignInAsync(user);
             }
 
-            var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
-            var claimsPrincipal = new ClaimsPrincipal(claimsIdentity);
-
-            await HttpContext.SignInAsync(claimsPrincipal);
             if (Url.IsLocalUrl(returnUrl))
             {
                 return Redirect(returnUrl);
@@ -260,7 +235,7 @@ namespace Authentication_System.Controllers
         [Authorize]
         public async Task<IActionResult> Logout()
         {
-            await HttpContext.SignOutAsync();
+            await _accountManager.SignOutAsync();
             return Redirect(Url.Action("Index", "Home"));
         }
 
@@ -272,14 +247,14 @@ namespace Authentication_System.Controllers
         [AcceptVerbs("Get", "Post")]
         public IActionResult IsValidePassword(string password)
         {
-            var isValid = ValidatePassword.IsValidate(password, out List<string> errors);
+            var result = _accountManager.CheckPasswordValidation(password);
 
-            if (isValid)
+            if (result.IsValid)
             {
                 return Json(true);
             }
 
-            var res = String.Join("<br />", errors);
+            var res = String.Join("<br />", result.Errors);
             return Json(res);
         }
 

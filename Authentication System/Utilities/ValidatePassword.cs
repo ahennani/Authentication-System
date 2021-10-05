@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.Options;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
@@ -6,41 +8,41 @@ using System.Threading.Tasks;
 
 namespace Authentication_System.Utilities
 {
-    class ValidatePassword
+    public class ValidatePassword
     {
-        public const int MIN_LENGTH = 32;
-        public const int MAN_LENGTH = 8;
         private const string UPPERCASE_PATTERN = @"[A-Z]+"; //
         private const string LOWERCASE_PATTERN = @"[a-z]+";
         private const string DIGIT_PATTERN = @"[0-9]+";
         private const string SPECIAL_CHARACTER_PATTERN = @"[!\]\[#$@%*+\\&/\-.]"; //[^A-Za-z0-9]  "'(),/:;<=>?\^_`{|}~]
 
+        private static PasswordOptions passwordOption;
 
-        public static bool IsValidate(string password, out List<string> errors)
+        public ValidatePassword(IOptions<IdentityOptions> identityOptions)
+        {
+            passwordOption = identityOptions.Value.Password;
+        }
+
+        public bool IsValidate(string password, out List<string> errors)
         {
             errors = new List<string>();
 
-            if (password.Length < MAN_LENGTH)
+            if (password.Length < passwordOption.RequiredLength)
             {
-                errors.Add($"Password Lenght Should Should Be {MAN_LENGTH} Or More");
+                errors.Add($"Password Lenght Should Should Be {passwordOption.RequiredLength} Or More");
             }
-            if (password.Length > MIN_LENGTH)
-            {
-                errors.Add($"Password Lenght Should Should Be {MIN_LENGTH} Or Less");
-            }
-            if (!Regex.IsMatch(password, UPPERCASE_PATTERN))
+            if (passwordOption.RequireUppercase && !Regex.IsMatch(password, UPPERCASE_PATTERN))
             {
                 errors.Add($"The password should contain an Uppercase");
             }
-            if (!Regex.IsMatch(password, LOWERCASE_PATTERN))
+            if (passwordOption.RequireLowercase && !Regex.IsMatch(password, LOWERCASE_PATTERN))
             {
                 errors.Add($"The password should contain a Lowercase");
             }
-            if (!Regex.IsMatch(password, DIGIT_PATTERN))
+            if (passwordOption.RequireDigit && !Regex.IsMatch(password, DIGIT_PATTERN))
             {
                 errors.Add($"The password should contain a Number");
             }
-            if (!Regex.IsMatch(password, SPECIAL_CHARACTER_PATTERN))
+            if (passwordOption.RequireNonAlphanumeric && !Regex.IsMatch(password, SPECIAL_CHARACTER_PATTERN))
             {
                 errors.Add($"The password should contain a Special Character");
             }

@@ -11,6 +11,7 @@
     <div class="row justify-content-center">
         <div class="col-12 col-md-6">
             <form asp-action="Login" asp-controller="Account" method="post">
+                <input name="returnUrl" type="hidden" value="@Model.ExternalLogins.ReturnUrl">
                 <div class="mb-3">
                     <label asp-for="Email" class="form-label"></label>
                     <input asp-for="Email" class="form-control" placeholder="name@example.com">
@@ -37,20 +38,19 @@
     <div class="row justify-content-center">
         <div class="col-12 col-md-6">
             <h2 class="text-center mt-3 mb-1">External Login</h2>
-            <form asp-action="ExternalLogin" 
-                  asp-controller="Account" 
-                  asp-route-returnUrl="@Model.ExternalLogins.ReturnUrl" 
+            <form asp-action="ExternalLogin"
+                  asp-controller="Account"
+                  asp-route-returnUrl="@Model.ExternalLogins.ReturnUrl"
                   method="post">
                 @foreach (var provider in Model.ExternalLogins.Providers)
                 {
                     <div class="d-grid gap-2">
-                        <button class="btn btn-primary" 
+                        <button class="btn btn-primary"
                                 type="submit"
                                 name="provider"
                                 value="@provider.Name"
-                                style="margin: 5px;"
-                                >
-                        @provider.Name.ToUpper()
+                                style="margin: 5px;">
+                            @provider.Name.ToUpper()
                         </button>
                     </div>
                 }

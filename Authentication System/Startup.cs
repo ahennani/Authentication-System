@@ -1,9 +1,12 @@
+using Authentication_System.Managers;
 using Authentication_System.Models;
+using Authentication_System.Utilities;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -34,13 +37,18 @@ namespace Authentication_System
         {
             services.AddControllersWithViews();
 
+            services.Configure<IdentityOptions>(opt =>
+            {
+                opt.Password.RequiredLength = 4;
+                opt.Password.RequireNonAlphanumeric = false;
+                opt.Password.RequireUppercase = false;
+                opt.Password.RequireLowercase = false;
+                opt.Password.RequireDigit = false;
+                opt.Password.RequiredUniqueChars = 0;
+            });
+
             services.AddDbContext<AppDbContext>
                 (option => option.UseSqlServer(this._Configuration.GetConnectionString("AppConnectionString")));
-
-            services.AddScoped<AppUser>();
-            services.AddScoped<ManageUsers>();
-
-            services.AddTransient<IAuthenticationSchemeProvider, AuthenticationSchemeProvider>();
 
             services.AddAuthentication(options =>
             {
@@ -53,26 +61,10 @@ namespace Authentication_System
                     cookieOption.AccessDeniedPath = "/Account/Denied";
                     cookieOption.LoginPath = "/Account/Login";
                     cookieOption.LogoutPath = "/Account/Logout";
-
-                    //cookieOption.Events = new CookieAuthenticationEvents()
-                    //{
-                    //    OnSigningIn = async context =>
-                    //    {
-                    //        var principal = context.Principal as ClaimsPrincipal;
-                    //        var scheme = context.Properties.Items.Where(k => k.Key == ".AuthScheme").FirstOrDefault();
-                    //        var claim = new Claim(scheme.Key, scheme.Value);
-                    //        var claimsIdentity = context.Principal.Identity as ClaimsIdentity;
-                    //        var nameIdentifier = claimsIdentity.Claims.FirstOrDefault(m => m.Type == ClaimTypes.NameIdentifier)?.Value;
-
-                    //        await Task.CompletedTask;
-                    //    }
-                    //};
-
-
                 })
                 .AddOpenIdConnect("google", options =>
                 {
-                    options.Authority =
+                    options.Authority = _Configuration.GetValue<string>("ExternalKeys:AuthorityGoogle");
                     options.CallbackPath = _Configuration.GetValue<string>("ExternalKeys:CallbackPathGoogle");
                     options.ClientId = _Configuration.GetValue<string>("ExternalKeys:ClientIdGoogle");
                     options.ClientSecret = _Configuration.GetValue<string>("ExternalKeys:ClientSecretGoogle");
@@ -105,6 +97,14 @@ namespace Authentication_System
                     options.ConsumerSecret = _Configuration.GetValue<string>("ExternalKeys:ConsumerSecret");
                     options.RetrieveUserDetails = true;
                 });
+            
+            // Scoped
+            services.AddScoped<IUsersManager, UsersManager>();
+            services.AddScoped<IAccountManager, AccountManager>();
+            services.AddScoped<ValidatePassword>();
+            // Transient
+            services.AddTransient<IAuthenticationSchemeProvider, AuthenticationSchemeProvider>();
+            services.AddTransient<IHttpContextAccessor, HttpContextAccessor>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -119,6 +119,8 @@ namespace Authentication_System
                 app.UseExceptionHandler("/Home/Error");
                 app.UseHsts();
             }
+
+
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 

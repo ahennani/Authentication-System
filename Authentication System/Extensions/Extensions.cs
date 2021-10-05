@@ -15,7 +15,7 @@ namespace Authentication_System.Extensions
                 var type = item.Type;
                 var val = item.Value;
             }
-            return claims.FirstOrDefault(c => c.Type == name)?.Value;
+            return claims.FirstOrDefault(c => c.Type == name).Value;
         }
     }
 }
