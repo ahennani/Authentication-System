@@ -1,5 +1,6 @@
 D:\..Growing\..Projects\WEB\BACKEND\MyProjects\Authentication System\Authentication System\bin\Debug\net5.0\appsettings.Development.json
 D:\..Growing\..Projects\WEB\BACKEND\MyProjects\Authentication System\Authentication System\bin\Debug\net5.0\appsettings.json
+D:\..Growing\..Projects\WEB\BACKEND\MyProjects\Authentication System\Authentication System\bin\Debug\net5.0\libman.json
 D:\..Growing\..Projects\WEB\BACKEND\MyProjects\Authentication System\Authentication System\bin\Debug\net5.0\Authentication System.exe
 D:\..Growing\..Projects\WEB\BACKEND\MyProjects\Authentication System\Authentication System\bin\Debug\net5.0\Authentication System.deps.json
 D:\..Growing\..Projects\WEB\BACKEND\MyProjects\Authentication System\Authentication System\bin\Debug\net5.0\Authentication System.runtimeconfig.json
@@ -290,13 +291,35 @@ D:\..Growing\..Projects\WEB\BACKEND\MyProjects\Authentication System\Authenticat
 D:\..Growing\..Projects\WEB\BACKEND\MyProjects\Authentication System\Authentication System\bin\Debug\net5.0\refs\WindowsBase.dll
 D:\..Growing\..Projects\WEB\BACKEND\MyProjects\Authentication System\Authentication System\bin\Debug\net5.0\Authentication System.Views.dll
 D:\..Growing\..Projects\WEB\BACKEND\MyProjects\Authentication System\Authentication System\bin\Debug\net5.0\Authentication System.Views.pdb
+D:\..Growing\..Projects\WEB\BACKEND\MyProjects\Authentication System\Authentication System\bin\Debug\net5.0\Humanizer.dll
+D:\..Growing\..Projects\WEB\BACKEND\MyProjects\Authentication System\Authentication System\bin\Debug\net5.0\Microsoft.AspNetCore.Authentication.Facebook.dll
+D:\..Growing\..Projects\WEB\BACKEND\MyProjects\Authentication System\Authentication System\bin\Debug\net5.0\Microsoft.AspNetCore.Authentication.OpenIdConnect.dll
+D:\..Growing\..Projects\WEB\BACKEND\MyProjects\Authentication System\Authentication System\bin\Debug\net5.0\Microsoft.AspNetCore.Authentication.Twitter.dll
 D:\..Growing\..Projects\WEB\BACKEND\MyProjects\Authentication System\Authentication System\bin\Debug\net5.0\Microsoft.AspNetCore.Mvc.Razor.Extensions.dll
 D:\..Growing\..Projects\WEB\BACKEND\MyProjects\Authentication System\Authentication System\bin\Debug\net5.0\Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation.dll
 D:\..Growing\..Projects\WEB\BACKEND\MyProjects\Authentication System\Authentication System\bin\Debug\net5.0\Microsoft.AspNetCore.Razor.Language.dll
 D:\..Growing\..Projects\WEB\BACKEND\MyProjects\Authentication System\Authentication System\bin\Debug\net5.0\Microsoft.CodeAnalysis.dll
 D:\..Growing\..Projects\WEB\BACKEND\MyProjects\Authentication System\Authentication System\bin\Debug\net5.0\Microsoft.CodeAnalysis.CSharp.dll
 D:\..Growing\..Projects\WEB\BACKEND\MyProjects\Authentication System\Authentication System\bin\Debug\net5.0\Microsoft.CodeAnalysis.Razor.dll
+D:\..Growing\..Projects\WEB\BACKEND\MyProjects\Authentication System\Authentication System\bin\Debug\net5.0\Microsoft.Data.SqlClient.dll
+D:\..Growing\..Projects\WEB\BACKEND\MyProjects\Authentication System\Authentication System\bin\Debug\net5.0\Microsoft.EntityFrameworkCore.dll
+D:\..Growing\..Projects\WEB\BACKEND\MyProjects\Authentication System\Authentication System\bin\Debug\net5.0\Microsoft.EntityFrameworkCore.Abstractions.dll
+D:\..Growing\..Projects\WEB\BACKEND\MyProjects\Authentication System\Authentication System\bin\Debug\net5.0\Microsoft.EntityFrameworkCore.Design.dll
+D:\..Growing\..Projects\WEB\BACKEND\MyProjects\Authentication System\Authentication System\bin\Debug\net5.0\Microsoft.EntityFrameworkCore.Relational.dll
+D:\..Growing\..Projects\WEB\BACKEND\MyProjects\Authentication System\Authentication System\bin\Debug\net5.0\Microsoft.EntityFrameworkCore.SqlServer.dll
+D:\..Growing\..Projects\WEB\BACKEND\MyProjects\Authentication System\Authentication System\bin\Debug\net5.0\Microsoft.Extensions.DependencyInjection.dll
 D:\..Growing\..Projects\WEB\BACKEND\MyProjects\Authentication System\Authentication System\bin\Debug\net5.0\Microsoft.Extensions.DependencyModel.dll
+D:\..Growing\..Projects\WEB\BACKEND\MyProjects\Authentication System\Authentication System\bin\Debug\net5.0\Microsoft.Identity.Client.dll
+D:\..Growing\..Projects\WEB\BACKEND\MyProjects\Authentication System\Authentication System\bin\Debug\net5.0\Microsoft.IdentityModel.JsonWebTokens.dll
+D:\..Growing\..Projects\WEB\BACKEND\MyProjects\Authentication System\Authentication System\bin\Debug\net5.0\Microsoft.IdentityModel.Logging.dll
+D:\..Growing\..Projects\WEB\BACKEND\MyProjects\Authentication System\Authentication System\bin\Debug\net5.0\Microsoft.IdentityModel.Protocols.dll
+D:\..Growing\..Projects\WEB\BACKEND\MyProjects\Authentication System\Authentication System\bin\Debug\net5.0\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
+D:\..Growing\..Projects\WEB\BACKEND\MyProjects\Authentication System\Authentication System\bin\Debug\net5.0\Microsoft.IdentityModel.Tokens.dll
+D:\..Growing\..Projects\WEB\BACKEND\MyProjects\Authentication System\Authentication System\bin\Debug\net5.0\System.Configuration.ConfigurationManager.dll
+D:\..Growing\..Projects\WEB\BACKEND\MyProjects\Authentication System\Authentication System\bin\Debug\net5.0\System.Diagnostics.DiagnosticSource.dll
+D:\..Growing\..Projects\WEB\BACKEND\MyProjects\Authentication System\Authentication System\bin\Debug\net5.0\System.IdentityModel.Tokens.Jwt.dll
+D:\..Growing\..Projects\WEB\BACKEND\MyProjects\Authentication System\Authentication System\bin\Debug\net5.0\System.Runtime.Caching.dll
+D:\..Growing\..Projects\WEB\BACKEND\MyProjects\Authentication System\Authentication System\bin\Debug\net5.0\System.Security.Cryptography.ProtectedData.dll
 D:\..Growing\..Projects\WEB\BACKEND\MyProjects\Authentication System\Authentication System\bin\Debug\net5.0\cs\Microsoft.CodeAnalysis.resources.dll
 D:\..Growing\..Projects\WEB\BACKEND\MyProjects\Authentication System\Authentication System\bin\Debug\net5.0\de\Microsoft.CodeAnalysis.resources.dll
 D:\..Growing\..Projects\WEB\BACKEND\MyProjects\Authentication System\Authentication System\bin\Debug\net5.0\es\Microsoft.CodeAnalysis.resources.dll
@@ -323,7 +346,18 @@ D:\..Growing\..Projects\WEB\BACKEND\MyProjects\Authentication System\Authenticat
 D:\..Growing\..Projects\WEB\BACKEND\MyProjects\Authentication System\Authentication System\bin\Debug\net5.0\tr\Microsoft.CodeAnalysis.CSharp.resources.dll
 D:\..Growing\..Projects\WEB\BACKEND\MyProjects\Authentication System\Authentication System\bin\Debug\net5.0\zh-Hans\Microsoft.CodeAnalysis.CSharp.resources.dll
 D:\..Growing\..Projects\WEB\BACKEND\MyProjects\Authentication System\Authentication System\bin\Debug\net5.0\zh-Hant\Microsoft.CodeAnalysis.CSharp.resources.dll
-D:\..Growing\..Projects\WEB\BACKEND\MyProjects\Authentication System\Authentication System\obj\Debug\net5.0\Authentication System.csproj.AssemblyReference.cache
+D:\..Growing\..Projects\WEB\BACKEND\MyProjects\Authentication System\Authentication System\bin\Debug\net5.0\runtimes\unix\lib\netcoreapp3.1\Microsoft.Data.SqlClient.dll
+D:\..Growing\..Projects\WEB\BACKEND\MyProjects\Authentication System\Authentication System\bin\Debug\net5.0\runtimes\win\lib\netcoreapp3.1\Microsoft.Data.SqlClient.dll
+D:\..Growing\..Projects\WEB\BACKEND\MyProjects\Authentication System\Authentication System\bin\Debug\net5.0\runtimes\win-arm\native\Microsoft.Data.SqlClient.SNI.dll
+D:\..Growing\..Projects\WEB\BACKEND\MyProjects\Authentication System\Authentication System\bin\Debug\net5.0\runtimes\win-arm\native\Microsoft.Data.SqlClient.SNI.pdb
+D:\..Growing\..Projects\WEB\BACKEND\MyProjects\Authentication System\Authentication System\bin\Debug\net5.0\runtimes\win-arm64\native\Microsoft.Data.SqlClient.SNI.dll
+D:\..Growing\..Projects\WEB\BACKEND\MyProjects\Authentication System\Authentication System\bin\Debug\net5.0\runtimes\win-arm64\native\Microsoft.Data.SqlClient.SNI.pdb
+D:\..Growing\..Projects\WEB\BACKEND\MyProjects\Authentication System\Authentication System\bin\Debug\net5.0\runtimes\win-x64\native\Microsoft.Data.SqlClient.SNI.dll
+D:\..Growing\..Projects\WEB\BACKEND\MyProjects\Authentication System\Authentication System\bin\Debug\net5.0\runtimes\win-x64\native\Microsoft.Data.SqlClient.SNI.pdb
+D:\..Growing\..Projects\WEB\BACKEND\MyProjects\Authentication System\Authentication System\bin\Debug\net5.0\runtimes\win-x86\native\Microsoft.Data.SqlClient.SNI.dll
+D:\..Growing\..Projects\WEB\BACKEND\MyProjects\Authentication System\Authentication System\bin\Debug\net5.0\runtimes\win-x86\native\Microsoft.Data.SqlClient.SNI.pdb
+D:\..Growing\..Projects\WEB\BACKEND\MyProjects\Authentication System\Authentication System\bin\Debug\net5.0\runtimes\win\lib\netstandard2.0\System.Runtime.Caching.dll
+D:\..Growing\..Projects\WEB\BACKEND\MyProjects\Authentication System\Authentication System\bin\Debug\net5.0\runtimes\win\lib\netstandard2.0\System.Security.Cryptography.ProtectedData.dll
 D:\..Growing\..Projects\WEB\BACKEND\MyProjects\Authentication System\Authentication System\obj\Debug\net5.0\Authentication System.GeneratedMSBuildEditorConfig.editorconfig
 D:\..Growing\..Projects\WEB\BACKEND\MyProjects\Authentication System\Authentication System\obj\Debug\net5.0\Authentication System.AssemblyInfoInputs.cache
 D:\..Growing\..Projects\WEB\BACKEND\MyProjects\Authentication System\Authentication System\obj\Debug\net5.0\Authentication System.AssemblyInfo.cs
@@ -338,10 +372,18 @@ D:\..Growing\..Projects\WEB\BACKEND\MyProjects\Authentication System\Authenticat
 D:\..Growing\..Projects\WEB\BACKEND\MyProjects\Authentication System\Authentication System\obj\Debug\net5.0\Authentication System.TagHelpers.input.cache
 D:\..Growing\..Projects\WEB\BACKEND\MyProjects\Authentication System\Authentication System\obj\Debug\net5.0\Authentication System.TagHelpers.output.cache
 D:\..Growing\..Projects\WEB\BACKEND\MyProjects\Authentication System\Authentication System\obj\Debug\net5.0\Authentication System.RazorCoreGenerate.cache
+D:\..Growing\..Projects\WEB\BACKEND\MyProjects\Authentication System\Authentication System\obj\Debug\net5.0\Razor\Views\Account\ChangePassword.cshtml.g.cs
+D:\..Growing\..Projects\WEB\BACKEND\MyProjects\Authentication System\Authentication System\obj\Debug\net5.0\Razor\Views\Account\ForgotPassword.cshtml.g.cs
+D:\..Growing\..Projects\WEB\BACKEND\MyProjects\Authentication System\Authentication System\obj\Debug\net5.0\Razor\Views\Account\Login.cshtml.g.cs
+D:\..Growing\..Projects\WEB\BACKEND\MyProjects\Authentication System\Authentication System\obj\Debug\net5.0\Razor\Views\Account\ResetPassword.cshtml.g.cs
+D:\..Growing\..Projects\WEB\BACKEND\MyProjects\Authentication System\Authentication System\obj\Debug\net5.0\Razor\Views\Account\Signup.cshtml.g.cs
 D:\..Growing\..Projects\WEB\BACKEND\MyProjects\Authentication System\Authentication System\obj\Debug\net5.0\Razor\Views\Home\Index.cshtml.g.cs
 D:\..Growing\..Projects\WEB\BACKEND\MyProjects\Authentication System\Authentication System\obj\Debug\net5.0\Razor\Views\Home\Privacy.cshtml.g.cs
 D:\..Growing\..Projects\WEB\BACKEND\MyProjects\Authentication System\Authentication System\obj\Debug\net5.0\Razor\Views\Shared\Error.cshtml.g.cs
+D:\..Growing\..Projects\WEB\BACKEND\MyProjects\Authentication System\Authentication System\obj\Debug\net5.0\Razor\Views\Shared\_Footer.cshtml.g.cs
+D:\..Growing\..Projects\WEB\BACKEND\MyProjects\Authentication System\Authentication System\obj\Debug\net5.0\Razor\Views\Shared\_Header.cshtml.g.cs
 D:\..Growing\..Projects\WEB\BACKEND\MyProjects\Authentication System\Authentication System\obj\Debug\net5.0\Razor\Views\Shared\_Layout.cshtml.g.cs
+D:\..Growing\..Projects\WEB\BACKEND\MyProjects\Authentication System\Authentication System\obj\Debug\net5.0\Razor\Views\Shared\_MembershipLayout.cshtml.g.cs
 D:\..Growing\..Projects\WEB\BACKEND\MyProjects\Authentication System\Authentication System\obj\Debug\net5.0\Razor\Views\Shared\_ValidationScriptsPartial.cshtml.g.cs
 D:\..Growing\..Projects\WEB\BACKEND\MyProjects\Authentication System\Authentication System\obj\Debug\net5.0\Razor\Views\_ViewImports.cshtml.g.cs
 D:\..Growing\..Projects\WEB\BACKEND\MyProjects\Authentication System\Authentication System\obj\Debug\net5.0\Razor\Views\_ViewStart.cshtml.g.cs
@@ -353,40 +395,9 @@ D:\..Growing\..Projects\WEB\BACKEND\MyProjects\Authentication System\Authenticat
 D:\..Growing\..Projects\WEB\BACKEND\MyProjects\Authentication System\Authentication System\obj\Debug\net5.0\ref\Authentication System.dll
 D:\..Growing\..Projects\WEB\BACKEND\MyProjects\Authentication System\Authentication System\obj\Debug\net5.0\Authentication System.pdb
 D:\..Growing\..Projects\WEB\BACKEND\MyProjects\Authentication System\Authentication System\obj\Debug\net5.0\Authentication System.genruntimeconfig.cache
-D:\..Growing\..Projects\WEB\BACKEND\MyProjects\Authentication System\Authentication System\bin\Debug\net5.0\Humanizer.dll
-D:\..Growing\..Projects\WEB\BACKEND\MyProjects\Authentication System\Authentication System\bin\Debug\net5.0\Microsoft.Data.SqlClient.dll
-D:\..Growing\..Projects\WEB\BACKEND\MyProjects\Authentication System\Authentication System\bin\Debug\net5.0\Microsoft.EntityFrameworkCore.dll
-D:\..Growing\..Projects\WEB\BACKEND\MyProjects\Authentication System\Authentication System\bin\Debug\net5.0\Microsoft.EntityFrameworkCore.Abstractions.dll
-D:\..Growing\..Projects\WEB\BACKEND\MyProjects\Authentication System\Authentication System\bin\Debug\net5.0\Microsoft.EntityFrameworkCore.Design.dll
-D:\..Growing\..Projects\WEB\BACKEND\MyProjects\Authentication System\Authentication System\bin\Debug\net5.0\Microsoft.EntityFrameworkCore.Relational.dll
-D:\..Growing\..Projects\WEB\BACKEND\MyProjects\Authentication System\Authentication System\bin\Debug\net5.0\Microsoft.EntityFrameworkCore.SqlServer.dll
-D:\..Growing\..Projects\WEB\BACKEND\MyProjects\Authentication System\Authentication System\bin\Debug\net5.0\Microsoft.Extensions.DependencyInjection.dll
-D:\..Growing\..Projects\WEB\BACKEND\MyProjects\Authentication System\Authentication System\bin\Debug\net5.0\Microsoft.Identity.Client.dll
-D:\..Growing\..Projects\WEB\BACKEND\MyProjects\Authentication System\Authentication System\bin\Debug\net5.0\Microsoft.IdentityModel.JsonWebTokens.dll
-D:\..Growing\..Projects\WEB\BACKEND\MyProjects\Authentication System\Authentication System\bin\Debug\net5.0\Microsoft.IdentityModel.Logging.dll
-D:\..Growing\..Projects\WEB\BACKEND\MyProjects\Authentication System\Authentication System\bin\Debug\net5.0\Microsoft.IdentityModel.Protocols.dll
-D:\..Growing\..Projects\WEB\BACKEND\MyProjects\Authentication System\Authentication System\bin\Debug\net5.0\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
-D:\..Growing\..Projects\WEB\BACKEND\MyProjects\Authentication System\Authentication System\bin\Debug\net5.0\Microsoft.IdentityModel.Tokens.dll
-D:\..Growing\..Projects\WEB\BACKEND\MyProjects\Authentication System\Authentication System\bin\Debug\net5.0\System.Configuration.ConfigurationManager.dll
-D:\..Growing\..Projects\WEB\BACKEND\MyProjects\Authentication System\Authentication System\bin\Debug\net5.0\System.Diagnostics.DiagnosticSource.dll
-D:\..Growing\..Projects\WEB\BACKEND\MyProjects\Authentication System\Authentication System\bin\Debug\net5.0\System.IdentityModel.Tokens.Jwt.dll
-D:\..Growing\..Projects\WEB\BACKEND\MyProjects\Authentication System\Authentication System\bin\Debug\net5.0\System.Runtime.Caching.dll
-D:\..Growing\..Projects\WEB\BACKEND\MyProjects\Authentication System\Authentication System\bin\Debug\net5.0\System.Security.Cryptography.ProtectedData.dll
-D:\..Growing\..Projects\WEB\BACKEND\MyProjects\Authentication System\Authentication System\bin\Debug\net5.0\runtimes\unix\lib\netcoreapp3.1\Microsoft.Data.SqlClient.dll
-D:\..Growing\..Projects\WEB\BACKEND\MyProjects\Authentication System\Authentication System\bin\Debug\net5.0\runtimes\win\lib\netcoreapp3.1\Microsoft.Data.SqlClient.dll
-D:\..Growing\..Projects\WEB\BACKEND\MyProjects\Authentication System\Authentication System\bin\Debug\net5.0\runtimes\win-arm\native\Microsoft.Data.SqlClient.SNI.dll
-D:\..Growing\..Projects\WEB\BACKEND\MyProjects\Authentication System\Authentication System\bin\Debug\net5.0\runtimes\win-arm\native\Microsoft.Data.SqlClient.SNI.pdb
-D:\..Growing\..Projects\WEB\BACKEND\MyProjects\Authentication System\Authentication System\bin\Debug\net5.0\runtimes\win-arm64\native\Microsoft.Data.SqlClient.SNI.dll
-D:\..Growing\..Projects\WEB\BACKEND\MyProjects\Authentication System\Authentication System\bin\Debug\net5.0\runtimes\win-arm64\native\Microsoft.Data.SqlClient.SNI.pdb
-D:\..Growing\..Projects\WEB\BACKEND\MyProjects\Authentication System\Authentication System\bin\Debug\net5.0\runtimes\win-x64\native\Microsoft.Data.SqlClient.SNI.dll
-D:\..Growing\..Projects\WEB\BACKEND\MyProjects\Authentication System\Authentication System\bin\Debug\net5.0\runtimes\win-x64\native\Microsoft.Data.SqlClient.SNI.pdb
-D:\..Growing\..Projects\WEB\BACKEND\MyProjects\Authentication System\Authentication System\bin\Debug\net5.0\runtimes\win-x86\native\Microsoft.Data.SqlClient.SNI.dll
-D:\..Growing\..Projects\WEB\BACKEND\MyProjects\Authentication System\Authentication System\bin\Debug\net5.0\runtimes\win-x86\native\Microsoft.Data.SqlClient.SNI.pdb
-D:\..Growing\..Projects\WEB\BACKEND\MyProjects\Authentication System\Authentication System\bin\Debug\net5.0\runtimes\win\lib\netstandard2.0\System.Runtime.Caching.dll
-D:\..Growing\..Projects\WEB\BACKEND\MyProjects\Authentication System\Authentication System\bin\Debug\net5.0\runtimes\win\lib\netstandard2.0\System.Security.Cryptography.ProtectedData.dll
-D:\..Growing\..Projects\WEB\BACKEND\MyProjects\Authentication System\Authentication System\bin\Debug\net5.0\libman.json
-D:\..Growing\..Projects\WEB\BACKEND\MyProjects\Authentication System\Authentication System\obj\Debug\net5.0\Razor\Views\Account\Login.cshtml.g.cs
-D:\..Growing\..Projects\WEB\BACKEND\MyProjects\Authentication System\Authentication System\obj\Debug\net5.0\Razor\Views\Account\Signup.cshtml.g.cs
-D:\..Growing\..Projects\WEB\BACKEND\MyProjects\Authentication System\Authentication System\bin\Debug\net5.0\Microsoft.AspNetCore.Authentication.OpenIdConnect.dll
-D:\..Growing\..Projects\WEB\BACKEND\MyProjects\Authentication System\Authentication System\bin\Debug\net5.0\Microsoft.AspNetCore.Authentication.Facebook.dll
-D:\..Growing\..Projects\WEB\BACKEND\MyProjects\Authentication System\Authentication System\bin\Debug\net5.0\Microsoft.AspNetCore.Authentication.Twitter.dll
+D:\..Growing\..Projects\WEB\BACKEND\MyProjects\Authentication System\Authentication System\obj\Debug\net5.0\Authentication System.csproj.AssemblyReference.cache
+D:\..Growing\..Projects\WEB\BACKEND\MyProjects\Authentication System\Authentication System\bin\Debug\net5.0\nlog.config
+D:\..Growing\..Projects\WEB\BACKEND\MyProjects\Authentication System\Authentication System\bin\Debug\net5.0\NLog.dll
+D:\..Growing\..Projects\WEB\BACKEND\MyProjects\Authentication System\Authentication System\bin\Debug\net5.0\NLog.Extensions.Logging.dll
+D:\..Growing\..Projects\WEB\BACKEND\MyProjects\Authentication System\Authentication System\bin\Debug\net5.0\NLog.Web.AspNetCore.dll
+D:\..Growing\..Projects\WEB\BACKEND\MyProjects\Authentication System\Authentication System\obj\Debug\net5.0\Razor\Views\Account\ConfirmEmail.cshtml.g.cs

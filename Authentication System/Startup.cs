@@ -1,5 +1,5 @@
 using Authentication_System.Managers;
-using Authentication_System.Models;
+using Authentication_System.Data;
 using Authentication_System.Utilities;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
@@ -20,6 +20,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using Authentication_System.Models.Configuration;
+using Authentication_System.Services;
 
 namespace Authentication_System
 {
@@ -36,6 +38,11 @@ namespace Authentication_System
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
+
+            services.AddMvc(option =>
+            {
+                option.EnableEndpointRouting = false;
+            });
 
             services.Configure<IdentityOptions>(opt =>
             {
@@ -97,7 +104,7 @@ namespace Authentication_System
                     options.ConsumerSecret = _Configuration.GetValue<string>("ExternalKeys:ConsumerSecret");
                     options.RetrieveUserDetails = true;
                 });
-            
+
             // Scoped
             services.AddScoped<IUsersManager, UsersManager>();
             services.AddScoped<IAccountManager, AccountManager>();
@@ -105,9 +112,11 @@ namespace Authentication_System
             // Transient
             services.AddTransient<IAuthenticationSchemeProvider, AuthenticationSchemeProvider>();
             services.AddTransient<IHttpContextAccessor, HttpContextAccessor>();
+            services.AddTransient<IEmailService, EmailService>();
+
+            services.Configure<EmailConfiguration>(_Configuration.GetSection("EmailConfiguration"));
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
@@ -129,11 +138,27 @@ namespace Authentication_System
             app.UseAuthentication();
             app.UseAuthorization();
 
-            app.UseEndpoints(endpoints =>
+            //app.UseEndpoints(endpoints =>
+            //{
+            //    endpoints.MapControllerRoute(
+            //        name: "default",
+            //        pattern: "{controller=Home}/{action=Index}/{id?}");
+            //});
+
+            app.UseMvc(route =>
             {
-                endpoints.MapControllerRoute(
-                    name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}");
+                route.MapRoute(
+                    name: "default", 
+                    template: "{controller=Home}/{action=Index}/{id?}");
+
+                //route.MapRoute(
+                //    name: "areaRoute",
+                //    template:  "{area:exists}/{controller=Admin}/{action=Index}/{id?}");
+
+                //route.MapAreaRoute(
+                //    name: "defaultArea",
+                //    areaName: "Admin",
+                //    template: "{controller=Home}/{action=Index}/{id?}");
             });
         }
     }

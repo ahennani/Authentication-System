@@ -1,4 +1,4 @@
-﻿@model AccountSignupViewModel
+﻿@model SignupViewModel
 @{
     ViewData["Title"] = "Signup";
 }
@@ -80,6 +80,6 @@
 
 </section>
 
-@section Scripts {
+@section ValidationScripts {
     @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
 }

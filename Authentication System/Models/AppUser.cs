@@ -12,6 +12,7 @@ namespace Authentication_System.Models
         public AppUser()
         {
             Providers = new List<Provider>();
+            //Roles = String.Join(",", RoleList);
         }
 
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
@@ -19,13 +20,13 @@ namespace Authentication_System.Models
         public string Username { get; set; }
         public string Firstname { get; set; }
         public string Lastname { get; set; }
-        // [Required]
         public string Email { get; set; }
         public string Password { get; set; }
-        public string Mobile { get; set; }
+        public string MobilePhone { get; set; }
         public string Roles { get; set; }
+        public Guid SecurityStamp { get; set; }
+        public bool EmailConfirmed { get; set; }
 
-        // [Required]
         public ICollection<Provider> Providers { get; set; }
 
         public List<string> RoleList

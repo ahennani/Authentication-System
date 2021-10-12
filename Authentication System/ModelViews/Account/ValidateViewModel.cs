@@ -3,15 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Authentication_System.ModelViews
+namespace Authentication_System.ModelViews.Account
 {
-    public class ResultViewModel
+    public class ValidateViewModel
     {
-        public ResultViewModel()
+        public ValidateViewModel()
         {
             Errors = new();
         }
-        public bool Succeed { get { return Errors.Count <= 0; } } 
+        public bool IsValid { get; set; }
 
         public List<string> Errors { get; set; }
     }

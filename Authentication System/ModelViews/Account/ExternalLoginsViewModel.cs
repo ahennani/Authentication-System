@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Authentication_System.ModelViews
+namespace Authentication_System.ModelViews.Account
 {
     public class ExternalLoginsViewModel
     {

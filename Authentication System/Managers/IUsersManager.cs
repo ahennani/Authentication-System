@@ -1,4 +1,5 @@
 ﻿using Authentication_System.Models;
+using Authentication_System.ModelViews.Account;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,14 +10,19 @@ namespace Authentication_System.Managers
 {
     public interface IUsersManager
     {
-        public AppUser AddNewUser(AppUser user, string providerName = null);
-        public bool AddUserProvider(AppUser user, string provider);
+        Task<AppUser> AddNewUserAsync(AppUser user, string providerName = null);
+        bool AddUserProvider(AppUser user, string provider);
         bool HasProvider(AppUser user, string providerName);
-        public AppUser GetAppUserByEmail(string email);
-        public AppUser GetAppUserById(string id);
-        public AppUser GetAppUserByPassword(string email, string password);
-        public AppUser GetAppUserByProvider(string email, string providerName);
-        public List<Claim> GetUserClaims(string email);
-        public List<Claim> GetClaims(AppUser user);
+        bool ChangePasswordAsync(AppUser user, string currentPasword, string newPassword);
+        AppUser GetAppUserByEmail(string email);
+        AppUser GetAppUserById(string id);
+        AppUser GetAppUserByPassword(string email, string password);
+        AppUser GetAppUserByProvider(string email, string providerName);
+        List<Claim> GetUserClaims(string email);
+        List<Claim> GetClaims(AppUser user);
+        Task<string> GeneratePasswordResetTokenAsync(AppUser user);
+        Task<string> GenerateEmailConfirmationTokenAsync(AppUser user);
+        Task<ResultViewModel> ConfirmEmailAsync(AppUser user, string token);
+        Task<ResultViewModel> ResetPasswordAsync(AppUser user, string token, string newPassword);
     }
 }

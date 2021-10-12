@@ -1,12 +1,12 @@
-﻿using Authentication_System.Models;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Authentication_System.ModelViews.Error;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Authentication_System.Controllers
 {
@@ -21,22 +21,22 @@ namespace Authentication_System.Controllers
         }
 
         [AllowAnonymous]
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View();
+            return await Task.Run(()=> View());
         }
 
         [Authorize]
-        public IActionResult Privacy()
+        public async Task<IActionResult> Privacy()
         {
-            return View();
+            return await Task.Run(() => View());
         }
 
         [AllowAnonymous]
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
+        public async Task<IActionResult> ErrorAsync()
         {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+            return await Task.Run(() => View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier }));
         }
     }
 }

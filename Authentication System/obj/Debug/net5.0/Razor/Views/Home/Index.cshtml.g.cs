@@ -28,13 +28,34 @@ using Authentication_System.Models;
 #nullable disable
 #nullable restore
 #line 3 "D:\..Growing\..Projects\WEB\BACKEND\MyProjects\Authentication System\Authentication System\Views\_ViewImports.cshtml"
+using Authentication_System.Managers;
+
+#line default
+#line hidden
+#nullable disable
+#nullable restore
+#line 4 "D:\..Growing\..Projects\WEB\BACKEND\MyProjects\Authentication System\Authentication System\Views\_ViewImports.cshtml"
 using Authentication_System.ModelViews;
 
 #line default
 #line hidden
 #nullable disable
+#nullable restore
+#line 5 "D:\..Growing\..Projects\WEB\BACKEND\MyProjects\Authentication System\Authentication System\Views\_ViewImports.cshtml"
+using Authentication_System.ModelViews.Error;
+
+#line default
+#line hidden
+#nullable disable
+#nullable restore
+#line 6 "D:\..Growing\..Projects\WEB\BACKEND\MyProjects\Authentication System\Authentication System\Views\_ViewImports.cshtml"
+using Authentication_System.ModelViews.Account;
+
+#line default
+#line hidden
+#nullable disable
     [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"99464617055fdb505bb0bb7fd91f9b14f7b0d030", @"/Views/Home/Index.cshtml")]
-    [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"ee8a06ce56fbd6ee15148bfb8a19e0faf63b417f", @"/Views/_ViewImports.cshtml")]
+    [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"bc038c5c5b2d53a9d214c51984e41a03d184f42c", @"/Views/_ViewImports.cshtml")]
     public class Views_Home_Index : global::Microsoft.AspNetCore.Mvc.Razor.RazorPage<dynamic>
     {
         #pragma warning disable 1998
@@ -51,6 +72,8 @@ using Authentication_System.ModelViews;
             WriteLiteral("\r\n<div class=\"text-center\">\r\n    <h1 class=\"display-4\">Welcome</h1>\r\n    <p>Learn about <a href=\"https://docs.microsoft.com/aspnet/core\">building Web apps with ASP.NET Core</a>.</p>\r\n</div>\r\n");
         }
         #pragma warning restore 1998
+        [global::Microsoft.AspNetCore.Mvc.Razor.Internal.RazorInjectAttribute]
+        public IAccountManager accountManager { get; private set; }
         [global::Microsoft.AspNetCore.Mvc.Razor.Internal.RazorInjectAttribute]
         public global::Microsoft.AspNetCore.Mvc.ViewFeatures.IModelExpressionProvider ModelExpressionProvider { get; private set; }
         [global::Microsoft.AspNetCore.Mvc.Razor.Internal.RazorInjectAttribute]

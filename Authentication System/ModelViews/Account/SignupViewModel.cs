@@ -6,9 +6,9 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Authentication_System.ModelViews
+namespace Authentication_System.ModelViews.Account
 {
-    public class AccountSignupViewModel
+    public class SignupViewModel
     {
         // [Required(ErrorMessage = "Password Should Not Be Empty")]
         [Display(Name = "FirstName")]
@@ -21,6 +21,7 @@ namespace Authentication_System.ModelViews
         [Required(ErrorMessage = "Email Should Not Be Empty")]
         [DataType(DataType.EmailAddress)]
         [Display(Name = "Address Email")]
+        [Remote(action: "VerifyEmail", controller: "Account")]
         public string Email { get; set; }
 
         [Required(ErrorMessage = "Password Should Not Be Empty")]

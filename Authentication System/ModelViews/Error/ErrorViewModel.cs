@@ -1,6 +1,6 @@
 using System;
 
-namespace Authentication_System.Models
+namespace Authentication_System.ModelViews.Error
 {
     public class ErrorViewModel
     {

@@ -1,0 +1,6 @@
+2021-10-12 04:09:04.9072|ERROR|Authentication_System.Managers.AccountManager|
+
+SendForgotPasswordEmailAsync:
+	 => https://localhost:44364/confirm-email?token=CfDJ8DaBpGTSQ39Aqv946TXvGzCdz51peyAn9AcgwJRfVwvKxy-qwBl9SWjGoRkb6l4_9jPVgFYuWQwq-Uc4yUBOgcBHYK9XND7lVF76btvf43naYjOTlHVMWwAOjbbzslcWLBkJISK95hDmUxDVRj8_ZADXCfM9W00-Wsq7YitIEBX-T8kBeJSOAI9F-dsEld9Wq4AC_oFlhzxJHJcCja62_wMZu7IVB27XcBpJ6umCJ8I9YgxOMJZcYCDw4idP-gpwD3Ce3wnroHEgGmrKJHbmpbo&uid=CfDJ8DaBpGTSQ39Aqv946TXvGzBbja7sg0wfD8XdElKmORYRRQgmbVcPG3b6fU9QY1XPVk9vz16QphJtZXpLGEdz_Dz-iP8QgvUPBtoXUoIWSGU8K9EUlIrDbhWhl8lHGJ9vMg&email=eeee@gmail.com
+2021-10-12 04:11:25.0613|ERROR|Microsoft.AspNetCore.Mvc.ViewFeatures.ViewResultExecutor|The view 'ConfirmEmail' was not found. Searched locations: /Views/Account/ConfirmEmail.cshtml, /Views/Shared/ConfirmEmail.cshtml, /Pages/Shared/ConfirmEmail.cshtml
+2021-10-12 04:11:25.1879|ERROR|Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware|An unhandled exception has occurred while executing the request.

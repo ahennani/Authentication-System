@@ -1,4 +1,4 @@
-﻿@model AccountLoginViewModel
+﻿@model LoginViewModel
 @{
     ViewData["Title"] = "Login";
 }
@@ -32,6 +32,13 @@
                 </div>
                 <div class="text-danger" asp-validation-summary="ModelOnly"></div>
             </form>
+            <div class="text-center">
+                <a asp-controller="Account" asp-action="ForgotPassword" title="Forgot password?">Forgot password?</a>
+                <hr />
+                <span>OR</span><br />
+                New member?
+                <a asp-controller="Account" asp-action="Signup" class="" title="Create an account">Create an account</a>
+            </div>
         </div>
     </div>
 
@@ -59,3 +66,8 @@
     </div>
 
 </section>
+
+@section Scripts{
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+

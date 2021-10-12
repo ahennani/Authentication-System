@@ -1,10 +1,15 @@
-﻿using Authentication_System.Extensions;
+﻿using Authentication_System.Data;
+using Authentication_System.Enums;
 using Authentication_System.Models;
+using Authentication_System.Models.Account;
+using Authentication_System.ModelViews.Account;
 using Microsoft.AspNetCore.Cryptography.KeyDerivation;
 using Microsoft.AspNetCore.DataProtection;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Security.Claims;
 using System.Security.Cryptography;
@@ -19,35 +24,39 @@ namespace Authentication_System.Managers
 
         private readonly AppDbContext _context;
         private readonly IConfiguration _configuration;
+        private readonly ILogger<UsersManager> _logger;
         private readonly IDataProtector _protector;
 
         public UsersManager(
                                 AppDbContext context,
                                 IDataProtectionProvider dataProtectionProvider,
-                                IConfiguration configuration
+                                IConfiguration configuration,
+                                ILogger<UsersManager> logger
                            )
         {
             this._context = context;
             this._configuration = configuration;
+            this._logger = logger;
             this._protector = dataProtectionProvider.CreateProtector(_configuration.GetValue<string>("Protection:Security"));
         }
 
-        public AppUser AddNewUser(AppUser user, string providerName = null)
+        public Task<AppUser> AddNewUserAsync(AppUser user, string providerName = null)
         {
-
-            user.Password = PasswordHasher(user.Password);
-
-            var entity = _context.AppUsers.Add(user);
-            var result = _context.SaveChanges();
-
-            if (result > 0 && !String.IsNullOrEmpty(providerName))
+            return Task.Run(() =>
             {
-                //user.Providers.Add(new Provider() { Name = providerName, User = user });
-                //_context.Providers.Add(new Provider() { Name = providerName, User = user });
-                AddUserProvider(entity.Entity, providerName);
-            }
+                user.SecurityStamp = Guid.NewGuid();
+                user.Password = PasswordHasher(user.Password);
 
-            return entity.Entity;
+                var entity = _context.AppUsers.Add(user);
+                var result = _context.SaveChanges();
+
+                if (result > 0 && !String.IsNullOrEmpty(providerName))
+                {
+                    AddUserProvider(entity.Entity, providerName);
+                }
+
+                return entity.Entity;
+            });
         }
 
         public bool AddUserProvider(AppUser user, string provider)
@@ -159,7 +168,157 @@ namespace Authentication_System.Managers
             return claims;
         }
 
+        public bool ChangePasswordAsync(AppUser currentUser, string currentPasword, string newPassword)
+        {
+            var user = _context.AppUsers.Find(currentUser.UserId);
+
+            var isMatched = IsValidPasswordHash(currentPasword, user.Password);
+            if (isMatched)
+            {
+                var hashedNewPaswword = PasswordHasher(newPassword);
+                user.Password = hashedNewPaswword;
+
+                return _context.SaveChanges() > 0;
+            }
+
+            return false;
+        }
+
+        public async Task<string> GeneratePasswordResetTokenAsync(AppUser user)
+        {
+            return await GenerateAsync(user, TokenPurpuse.ForgetPassword);
+        }
+
+        public async Task<string> GenerateEmailConfirmationTokenAsync(AppUser user)
+        {
+            return await GenerateAsync(user, TokenPurpuse.EmailConfirmation);
+        }
+
+        public async Task<ResultViewModel> ResetPasswordAsync(AppUser user, string token, string newPassword)
+        {
+            var result = new ResultViewModel();
+
+            var validateToken = await ValidateAsync(user, TokenPurpuse.ForgetPassword, token);
+            if (!validateToken.Validated)
+            {
+                result.Errors.Add("Invalid Email Confirmation Link !!");
+                return result;
+            }
+
+            var isChanged = ChangeForgottenPasswordAsync(user, newPassword);
+            if (!isChanged)
+            {
+                result.Errors.Add("Password Did Not Change !!");
+            }
+
+            return result;
+        }
+
+        public async Task<ResultViewModel> ConfirmEmailAsync(AppUser user, string token)
+        {
+            var result = new ResultViewModel();
+
+            var validateToken = await ValidateAsync(user, TokenPurpuse.EmailConfirmation, token);
+            if (!validateToken.Validated)
+            {
+                result.Errors.Add("Invalid Email Confirmation Link !!");
+            }
+
+            if (user.EmailConfirmed is true)
+            {
+                result.Errors.Add("Confirmation Link Is Not Valid !!");
+                return result;
+            }
+
+            await Task.Run(() =>
+            {
+                user.EmailConfirmed = true;
+                _context.Attach(user);
+                _context.Entry(user).Property(p => p.EmailConfirmed).IsModified = true;
+                _context.SaveChanges();
+            });
+
+            return result;
+        }
+
         //////////////////////////////////////// <Protected Methods> ////////////////////////////////////////////
+
+        protected Task<string> GenerateAsync(AppUser user, TokenPurpuse purpuse)
+        {
+            return Task.Run(() =>
+            {
+                using (MemoryStream ms = new MemoryStream())
+                {
+                    var ttt = TokenPurpuse.EmailConfirmation.ToString();
+                    StreamWriter writer = new StreamWriter(ms);
+                    writer.WriteLine(user.UserId.ToString());
+                    writer.WriteLine(user.SecurityStamp);
+                    writer.WriteLine(purpuse.ToString());
+                    writer.WriteLine(DateTime.UtcNow);
+                    writer.Flush();
+
+                    //var res = Convert.ToBase64String(ms.ToArray());
+                    //var protectedRes = _protector.Protect(res);
+                    //_logger.LogError($"\n\nGenerateAsync:\n\t => {res}\n\t => {protectedRes}\n\n");
+                    //return protectedRes;
+
+                    return _protector.Protect(Convert.ToBase64String(ms.ToArray()));
+                }
+            });
+        }
+        
+        protected Task<TokenValidationModel> ValidateAsync(AppUser user, TokenPurpuse tokenPurpuse, string token)
+        {
+            var result = new TokenValidationModel();
+
+            var data = Convert.FromBase64String(_protector.Unprotect(token));
+
+            //_logger.LogError($"\n\nValidateAsync:\n\t => {token}\n\t => {_protector.Unprotect(token)}\n\n");
+
+            return Task.Run(() =>
+            {
+                using (MemoryStream ms = new MemoryStream(data))
+                {
+                    var reader = new StreamReader(ms);
+                    var userId = reader.ReadLine();
+                    var securityStamp = new Guid(reader.ReadLine());
+                    var purpuse = reader.ReadLine();
+                    var when = DateTime.Parse(reader.ReadLine());
+
+                    if (when < DateTime.UtcNow.AddHours(-24))
+                    {
+                        result.Errors.Add(TokenValidationStatus.Expired);
+                    }
+
+                    if (securityStamp != user.SecurityStamp)
+                    {
+                        result.Errors.Add(TokenValidationStatus.SecurityStamp);
+                    }
+
+                    if (purpuse != tokenPurpuse.ToString())
+                    {
+                        result.Errors.Add(TokenValidationStatus.WrongPurpose);
+                    }
+
+                    if (user.UserId.ToString() != userId)
+                    {
+                        result.Errors.Add(TokenValidationStatus.WrongUser);
+                    }
+
+                    return result;
+                }
+            });
+        }
+
+        protected bool ChangeForgottenPasswordAsync(AppUser user, string newPassword)
+        {
+            user.Password = PasswordHasher(newPassword);
+
+            var r1 = _context.Attach(user);
+            _context.Entry(user).Property(u => u.Password).IsModified = true;
+            
+            return _context.SaveChanges() > 0;
+        }
 
         protected string PasswordHasher(string password)
         {
@@ -206,7 +365,6 @@ namespace Authentication_System.Managers
 
         protected string HashPassword(byte[] saltBytes, string passwordBytes)
         {
-
             var hashBytes = KeyDerivation.Pbkdf2(
                                                     password: passwordBytes,
                                                     salt: saltBytes,
@@ -216,16 +374,13 @@ namespace Authentication_System.Managers
                                                 );
 
             return Convert.ToBase64String(hashBytes);
-
-            //using (var hashedPasswordBytes = new Rfc2898DeriveBytes(passwordBytes, saltBytes, 10000))
-            //{
-            //    return Convert.ToBase64String(hashedPasswordBytes.GetBytes(24));
-            //}
         }
 
         protected byte[] GetBytes(string password)
         {
             return Encoding.ASCII.GetBytes(password);
         }
+    
+    
     }
 }
